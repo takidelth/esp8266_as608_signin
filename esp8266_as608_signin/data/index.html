@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理页面</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+</head>
+
+<body>
+    <div id="navbar">
+        签到机管理页面
+        <div id="author">
+            <a href="http://takidelth.cn">Bear(taki)</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="title">状态信息</h2>
+        <div class="box">
+            <div class="item">
+                <div class="item-title">
+                    <span>闪存状态</span>
+                </div>
+                <div class="item-value">
+                    <span id="spiffsState"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>WiFi连接状态</span>
+                </div>
+                <div class="item-value">
+                    <span id="wifiConnectionState"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>WiFi SSID</span>
+                </div>
+                <div class="item-value">
+                    <span id="ssid"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>WiFi IP</span>
+                </div>
+                <div class="item-value">
+                    <span id="ip"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="title">上报服务器信息</h2>
+        <div class="box">
+            <div class="item">
+                <div class="item-title">
+                    <span>Host</span>
+                </div>
+                <div class="item-value">
+                    <span id="dataServerHost"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>Port</span>
+                </div>
+                <div class="item-value">
+                    <span id="dataServerPort"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>状态</span>
+                </div>
+                <div class="item-value">
+                    <span id="dataServerState" class="active">active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="title">成员信息</h2>
+        <div class="box">
+            <div class="item">
+                <div class="item-title">
+                    <span>已注册用户</span>
+                </div>
+                <div class="item-value">
+                    <span id="userCount"></span>人
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>教师</span>
+                </div>
+                <div class="item-value">
+                    <span id="userCountTeacher">0</span>人
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">
+                    <span>学生</span>
+                </div>
+                <div class="item-value">
+                    <span id="userCountStudent">0</span>人
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="title">附近可用WiFi</h2>
+        <div class="box" id="wifiList">
+            <div class="row">
+                <div class="field">SSID</div>
+                <div class="field">信道</div>
+                <div class="field">强度(dBm)</div>
+                <div class="field">加密方式</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="title">Settings</h2>
+        <div class="box" id="settingsBox">
+            <form name="settingsGroup">
+                <div class="item">
+                    <div class="item-title">
+                        <span>ap-SSID</span>
+                    </div>
+                    <div class="item-value">
+                        <input type="text" name="apSSID" disabled>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-title">
+                        <span>ap-Password</span>
+                    </div>
+                    <div class="item-value">
+                        <input type="text" name="apPassword" disabled>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-title">
+                        <span>wifi-SSID</span>
+                    </div>
+                    <div class="item-value">
+                        <select name="wifiSSID" disabled>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-title">
+                        <span>wifi-Password</span>
+                    </div>
+                    <div class="item-value">
+                        <input type="text" name="wifiPassword" disabled>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-title">
+                        <span>dataServer-Host</span>
+                    </div>
+                    <div class="item-value">
+                        <input type="text" name="dataServerHost" disabled>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-title">
+                        <span>dataServer-port</span>
+                    </div>
+                    <div class="item-value">
+                        <input type="text" name="dataServerPort" disabled>
+                    </div>
+                </div>
+            </form>
+            <div class="btnGroup">
+                <button id="modifyBtn">修改</button>
+                <button id="modifySubmitBtn" style="display: none;">提交</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="tool-box">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+
+    </div>
+
+    <div class="btn-group">
+        <button id="addUser">添加新用户</button>
+        <button id="modifyUserInfo">修改用户信息</button>
+        <button id="viewAllUser">查看所有用户</button>
+    </div>
+
+    <script>
+        var regUserName = "",
+            userCount = 0,
+            settings, // 设置
+            userInfoData, // 用户信息 json 内容
+            wifiList; // wifi列表
+        var toolBox = document.getElementById("tool-box");
+        var waitLogoHtmlString = `<div class="spinner"> 
+                                    <div class="rect1"></div> 
+                                    <div class="rect2"></div> 
+                                    <div class="rect3"></div> 
+                                    <div class="rect4"></div> 
+                                    <div class="rect5"></div> 
+                                </div>`;
+
+        /**
+         * 获取设备 闪存 WiFi 状态
+         */
+        function getAllState() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/getAllState', true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        document.getElementById('spiffsState').innerHTML = data.spiffsState;
+                        document.getElementById('wifiConnectionState').innerHTML = data.wifiConnectionState;
+                        document.getElementById('ssid').innerHTML = data.ssid;
+                        document.getElementById('ip').innerHTML = data.ip;
+                    } else {
+                        console.log('getAllState error');
+                    }
+                }
+            }
+        }
+
+
+        // 获取所有用户信息
+        // api 使用 服务器提供
+        function getAllUserInfo() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/userinfo.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        userInfoData = JSON.parse(xhr.responseText);
+
+                        userCount = userInfoData.count;
+                        var teacher = 0,
+                            student = 0;
+                        userInfoData.data.forEach(function(item) {
+                            if (item.position == '教师') {
+                                teacher++;
+                            } else {
+                                student++;
+                            }
+                        });
+                        document.getElementById('userCount').innerHTML = userCount;
+                        document.getElementById('userCountTeacher').innerHTML = teacher;
+                        document.getElementById('userCountStudent').innerHTML = student;
+                    }
+                }
+            }
+        }
+
+
+        // 格式化时间
+        function dateFormat(fmt, date) {
+            let ret;
+            const opt = {
+                "Y+": date.getFullYear().toString(), // 年
+                "m+": (date.getMonth() + 1).toString(), // 月
+                "d+": date.getDate().toString(), // 日
+                "H+": date.getHours().toString(), // 时
+                "M+": date.getMinutes().toString(), // 分
+                "S+": date.getSeconds().toString() // 秒
+                    // 有其他格式化字符需求可以继续添加，必须转化成字符串
+            };
+            for (let k in opt) {
+                ret = new RegExp("(" + k + ")").exec(fmt);
+                if (ret) {
+                    fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                };
+            };
+            return fmt;
+        }
+
+
+        // 处理添加用户 事件触发
+        document.getElementById("addUser").onclick = function() {
+            if (this.innerText == "取消") {
+                this.innerText = "添加新用户";
+                toolBox.innerHTML = waitLogoHtmlString;
+
+                // enable
+                document.getElementById("modifyUserInfo").style.disabled = false;
+                document.getElementById("viewAllUser").style.disabled = false;
+                return;
+            }
+            this.innerText = "取消";
+            document.getElementById("modifyUserInfo").style.disabled = true;
+            document.getElementById("viewAllUser").style.disabled = true;
+
+            toolBox.innerHTML = `<h2 class="title">添加用户</h2>
+                    <div class="box">
+                        <div id="floatBox">
+                            <div class="spinner">
+                                <div class="rect1"></div>
+                                <div class="rect2"></div>
+                                <div class="rect3"></div>
+                                <div class="rect4"></div>
+                                <div class="rect5"></div>
+                            </div>
+                        </div>
+                        <form name="addUserForm">
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>姓名</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>邮箱</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="email" name="email">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>定位</span>
+                                </div>
+                                <div class="item-value">
+                                    <select name="position">
+                                        <option value="学生">学生</option>
+                                        <option value="教师">教师</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>注册时间</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="date" name="date" disabled>
+                                </div>
+                            </div>
+                        </form>
+                        <button id="submit">提交</button>
+                    </div>`;
+
+            var form = addUserForm;
+            form.date.value = dateFormat("YYYY-mm-dd", new Date()); // 填充date文本框注册时间
+
+            // 提交按钮  并注册触发函数
+            document.getElementById("submit").onclick = function() {
+                // 构造请求参数
+                var param = '?name=' + form.name.value +
+                    '&position=' + form.position.value +
+                    '&date=' + form.date.value +
+                    '&email=' + form.email.value;
+
+                // 发送注册用户请求
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/api/regist' + param, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) { // 成功
+                            var data = JSON.parse(xhr.responseText);
+                            if (data.msg == 'success') {
+                                // 设置页面动态图标
+                                alert('提交成功, 请按下指纹');
+                                form.style.opacity = "0.1";
+                                document.getElementById("floatBox").style.display = "block";
+                                document.getElementById("submit").disabled = "true";
+                                var requestCount = 0; // 请求次数 不得超过30次 :: 后端限制 30秒为timeout
+                                // 确认指纹录入状态位
+                                var ticker = setInterval(function() {
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open('GET', '/api/getRegistState', true);
+                                    xhr.send();
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4) {
+                                            if (xhr.status == 200) {
+                                                var data = JSON.parse(xhr.responseText);
+                                                if (data.status == true) {
+                                                    // 成功
+                                                    clearInterval(ticker);
+                                                    alert('添加成功');
+                                                    location.reload(); // 重新加载页面
+                                                } else {
+                                                    requestCount++;
+                                                    if (requestCount > 30) {
+                                                        clearInterval(ticker);
+                                                        alert('添加失败');
+                                                        location.reload(); // 重新加载页面
+                                                    }
+                                                }
+                                            } else {
+                                                console.log('get register state error');
+                                            }
+                                        }
+                                    }
+                                }, 1000);
+                            } else {
+                                alert('提交失败');
+                            }
+                        } else {
+                            alert("添加失败, 请检查是否缺少参数");
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // 修改用户信息 事件触发
+        document.getElementById("modifyUserInfo").onclick = function() {
+            if (this.innerText == "取消") {
+                this.innerText = "修改用户信息";
+                toolBox.innerHTML = waitLogoHtmlString;
+
+                // enable
+                document.getElementById("addUser").style.disabled = false;
+                document.getElementById("viewAllUser").style.disabled = false;
+                return;
+            }
+            this.innerText = "取消";
+            // disable other button
+            document.getElementById("addUser").style.disabled = true;
+            document.getElementById("viewAllUser").style.disabled = true;
+
+            toolBox.innerHTML = `<h2 class="title">修改用户信息</h2>
+                    <div class="box">
+                        <div id="floatBox">
+                            <div class="spinner">
+                                <div class="rect1"></div>
+                                <div class="rect2"></div>
+                                <div class="rect3"></div>
+                                <div class="rect4"></div>
+                                <div class="rect5"></div>
+                            </div>
+                        </div>
+                        <form name="modifyUserForm">
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>id</span>
+                                </div>
+                                <div class="item-value">
+                                    <select name="id" id="selectModify">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>姓名</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>邮箱</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="email" name="email">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>定位</span>
+                                </div>
+                                <div class="item-value">
+                                    <select name="position">
+                                        <option value="学生">学生</option>
+                                        <option value="教师">教师</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">
+                                    <span>注册时间</span>
+                                </div>
+                                <div class="item-value">
+                                    <input type="date" name="date" disabled>
+                                </div>
+                            </div>
+                        </form>
+                        <button id="submit">提交</button>
+                    </div>`;
+
+            var form = modifyUserForm;
+            var select = document.getElementById("selectModify");
+            if (userInfoData == null) {
+                getAllUserInfo();
+            }
+            userInfoData.data.forEach(function(item) {
+                var option = document.createElement("option");
+                option.value = item.id;
+                option.innerText = `${item.id} (${item.name})`;
+                select.appendChild(option);
+            });
+
+            select.onchange = function() { // 点击选项时触发自动填充其他字段
+                var index = parseInt(select.value) - 1;
+                form.name.value = userInfoData.data[index].name;
+                form.email.value = userInfoData.data[index].email;
+                form.position.value = userInfoData.data[index].position;
+                form.date.value = userInfoData.data[index].date;
+            }
+
+            // 提交修改
+            document.getElementById("submit").onclick = function() {
+                var index = parseInt(select.value) - 1;
+                var param = `?id=${index+1}`;
+
+                if (form.name.value != userInfoData.data[index].name) {
+                    param += `&name=${form.name.value}`;
+                }
+                if (form.email.value != userInfoData.data[index].email) {
+                    param += `&email=${form.email.value}`;
+                }
+                if (form.position.value != userInfoData.data[index].position) {
+                    param += `&position=${form.position.value}`;
+                }
+
+                if (param == `?id=${index+1}`) {
+                    alert("数据没有发生变化");
+                    toolBox.innerHTML = waitLogoHtmlString;
+                    return;
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/api/modifyUserInfo' + param, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            if (JSON.parse(xhr.responseText).msg == "success") {
+                                alert("提交成功");
+                                getAllUserInfo();
+                                toolBox.innerHTML = waitLogoHtmlString;
+                                document.getElementById("modifyUserInfo").innerText = "修改用户信息";
+                            } else {
+                                alert("提交失败");
+                                toolBox.innerHTML = waitLogoHtmlString;
+                                document.getElementById("modifyUserInfo").innerText = "修改用户信息";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // 查看所有用户 事件触发
+        document.getElementById("viewAllUser").onclick = function() {
+            if (this.innerText == "取消") {
+                this.innerText = "查看所有用户";
+                toolBox.innerHTML = waitLogoHtmlString;
+
+                // disable
+                document.getElementById("addUser").style.disabled = false;
+                document.getElementById("modifyUserInfo").style.disabled = false;
+                return;
+            }
+            this.innerText = "取消";
+            // disable other button
+            document.getElementById("addUser").style.disabled = true;
+            document.getElementById("modifyUserInfo").style.disabled = true;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/userinfo.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        var htmlString = "";
+                        data.data.forEach(function(item) {
+                            htmlString += `<div class="row">
+                                        <div class="field">${item.id}</div>
+                                        <div class="field">${item.name}</div>
+                                        <div class="field">${item.position}</div>
+                                        <div class="field">${item.date}</div>
+                                        </div>`
+                        });
+                        toolBox.innerHTML = `<div class="box">
+                                                <div class="row">
+                                                    <div class="field">id</div>
+                                                    <div class="field">用户名</div>
+                                                    <div class="field">定位</div>
+                                                    <div class="field">注册时间</div>
+                                                </div>
+                                                ${htmlString}
+                                            </div>`;
+                    } else {
+                        alert("获取用户信息失败");
+                    }
+                }
+            }
+        }
+
+
+        // 加载可用 wifi
+        function getAvaliableWiFiList() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/scanWiFi', true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        var htmlString = "";
+                        if (data.count > 0) {
+                            wifiList = data.data;
+                            wifiList.forEach(function(item) {
+                                htmlString = "<div class=\"row\">";
+                                htmlString += "<div class=\"field\">" + item.ssid + "</div>";
+                                htmlString += "<div class=\"field\">" + item.channel + "</div>";
+                                htmlString += "<div class=\"field\">" + item.strength + "</div>";
+                                htmlString += "<div class=\"field\">" + item.encryption + "</div>";
+                                htmlString += "</div>";
+                                document.getElementById('wifiList').innerHTML += htmlString;
+
+                                settingsGroup.wifiSSID.innerHTML += "<option value=\"" + item.ssid + "\">" + item.ssid + "</option>";
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // 获取上报服务器信息
+        function getDataServerInfo() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/getSettings', true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        settings = JSON.parse(xhr.responseText);
+                        document.getElementById('dataServerHost').innerHTML = settings.dataServer.host;
+                        document.getElementById('dataServerPort').innerHTML = settings.dataServer.port;
+
+                        settingsGroup.apSSID.value = settings.ap.ssid;
+                        settingsGroup.apPassword.value = settings.ap.password;
+                        settingsGroup.wifiSSID.value = settings.wifi.ssid;
+                        settingsGroup.wifiPassword.value = settings.wifi.password;
+                        settingsGroup.dataServerHost.value = settings.dataServer.host;
+                        settingsGroup.dataServerPort.value = settings.dataServer.port;
+                    }
+                }
+            }
+        }
+
+
+        function unlockSettingsGroup() {
+            settingsGroup.apSSID.disabled = false;
+            settingsGroup.apPassword.disabled = false;
+            settingsGroup.wifiSSID.disabled = false;
+            settingsGroup.wifiPassword.disabled = false;
+            settingsGroup.dataServerHost.disabled = false;
+            settingsGroup.dataServerPort.disabled = false;
+
+
+        }
+
+        function lockSettingsGroup() {
+            settingsGroup.apSSID.disabled = true;
+            settingsGroup.apPassword.disabled = true;
+            settingsGroup.wifiSSID.disabled = true;
+            settingsGroup.wifiPassword.disabled = true;
+            settingsGroup.dataServerHost.disabled = true;
+            settingsGroup.dataServerPort.disabled = true;
+        }
+
+
+        document.getElementById('modifyBtn').onclick = function() {
+            if (this.innerText == "修改") {
+                this.innerText = "取消";
+                document.getElementById("modifySubmitBtn").style.display = "inline-block";
+                unlockSettingsGroup();
+            } else {
+                this.innerText = "修改";
+                document.getElementById("modifySubmitBtn").style.display = "none";
+                lockSettingsGroup();
+            }
+        }
+
+
+        document.getElementById("modifySubmitBtn").onclick = function() {
+            var param = "?change=true";
+            if (settingsGroup.apSSID.value != settings.ap.ssid) {
+                param += "&apSSID=" + settingsGroup.apSSID.value;
+            }
+            if (settingsGroup.apPassword.value != settings.ap.password) {
+                param += "&apPassword=" + settingsGroup.apPassword.value;
+            }
+            if (settingsGroup.wifiSSID.value != settings.wifi.ssid) {
+                param += "&wifiSSID=" + settingsGroup.wifiSSID.value;
+            }
+            if (settingsGroup.wifiPassword.value != settings.wifi.password) {
+                param += "&wifiPassword=" + settingsGroup.wifiPassword.value;
+            }
+            if (settingsGroup.dataServerHost.value != settings.dataServer.host) {
+                param += "&dataServerHost=" + settingsGroup.dataServerHost.value;
+            }
+            if (settingsGroup.dataServerPort.value != settings.dataServer.port) {
+                param += "&dataServerPort=" + settingsGroup.dataServerPort.value;
+            }
+
+            if (param == "&change=true") {
+                alert("没有修改任何设置");
+                return;
+            }
+            var url = "/api/changeSettings" + param;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        getDataServerInfo(); // 刷新设置
+                        alert("提交成功");
+                        document.getElementById('modifyBtn').innerText = "修改";
+                        document.getElementById("modifySubmitBtn").style.display = "none";
+                        lockSettingsGroup();
+                    }
+                }
+            }
+        }
+
+
+        getAllState();
+        getAllUserInfo();
+        getAvaliableWiFiList();
+        getDataServerInfo();
+        // 每60秒刷新状态信息
+        setInterval(getAllState, 60000);
+    </script>
+</body>
+
+</html>

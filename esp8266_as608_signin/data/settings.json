@@ -1,0 +1,14 @@
+{
+    "ap": {
+        "ssid": "签到机AP热点",
+        "password":"123456789"
+        },
+    "wifi": {
+        "ssid":"Xiaomi_98D9",
+        "password":"wanghai1015"
+    },
+    "dataServer":{
+        "host":"api.takidelth.cn",
+        "port":"80"
+    }
+}

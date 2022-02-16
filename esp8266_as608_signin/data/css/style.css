@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f2f3f8;
+}
+
+.container {
+    background-color: #ffffff;
+    width: 400px;
+    height: auto;
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 400px) {
+    .container {
+        width: 300px;
+    }
+}
+
+.container .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-bottom: 1px solid #ebedf2;
+}
+
+.container .box {
+    padding: 10px;
+    font-size: 16px;
+    color: #868e96;
+}
+
+.box .item {
+    display: flex;
+}
+
+.item div {
+    flex: 1;
+    margin-bottom: 5px;
+}
+
+.box .row {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: #868e96 1px solid;
+}
+
+.row div {
+    flex: 1;
+    text-align: center;
+    font-size: 8px;
+}
+
+.btn-group {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+    margin: 10px auto;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 12px;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+button:hover {
+    background-color: #0069d9;
+}
+
+input,
+select {
+    border: 1px solid #ebedf2;
+    padding: .4em;
+}
+
+@media screen and (max-width: 400px) {
+    #settingsBox .item-title {
+        font-size: 10px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+}
+
+#floatBox {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+#navbar {
+    /* position: fixed; */
+    background-color: #343a40;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#author {
+    float: right;
+    width: 100px;
+    height: auto;
+    text-align: center;
+}
+
+#author a {
+    color: #db9443;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.active {
+    color: rgb(1, 173, 1);
+    font-weight: bold;
+}
+
+.stop {
+    color: red;
+    font-weight: bold;
+}
+
+#settingsBox {
+    user-select: none;
+}
